@@ -43,7 +43,11 @@ export function HeaderSlot({
         id="site-header"
         data-scrolled="false"
         className={
-          "group/header z-40 flex h-20 items-center justify-between gap-4 border-b border-header-border-subtle bg-card px-4 text-foreground ui-motion-emphasis sm:px-6 lg:h-24 " +
+          // Cópia deste tema: Volt trata cada região do shell como um cartão "bento" flutuante
+          // (Shell.tsx envolve tudo num gutter com gap) — por isso border em todos os lados +
+          // rounded-panel + shadow-float sempre ligados a partir de lg, não só border-b como no
+          // Venore Slime (lá o header é full-bleed, aqui é mais um cartão entre outros).
+          "group/header z-40 flex h-20 items-center justify-between gap-4 border-b border-header-border-subtle bg-card px-4 text-foreground shadow-float ui-motion-emphasis sm:px-6 lg:h-24 lg:rounded-panel lg:border lg:border-border " +
           (stickyEnabled ? "sticky top-0 backdrop-blur-sm " : "") +
           (scrollShrinkEnabled
             ? "data-[scrolled=true]:h-16 data-[scrolled=true]:border-border data-[scrolled=true]:bg-card/85 data-[scrolled=true]:shadow-header data-[scrolled=true]:backdrop-blur-xl "

@@ -4,23 +4,16 @@ import { FooterSlot } from "./FooterSlot";
 import { ContentSlot } from "./ContentSlot";
 import { SidebarLeftSlot } from "./SidebarLeftSlot";
 
-// Único export que o contrato de tema exige (docs/themes/shell-contract.md — Abordagem A): dono
-// da árvore/arranjo entre as regiões estruturais. Header em cima; abaixo, SidebarLeft e uma
-// coluna de conteúdo lado a lado dentro de um `flex` — essa árvore morava em
-// `(platform)/layout.tsx` antes desta sessão; migrou pra cá porque quem decide arranjo agora é
-// sempre o tema, nunca `platform/` (docs/venore-docks.md — "Contrato de slot"). Header/Footer/
-// Content/SidebarLeft continuam existindo como componentes internos próprios do Venore Slime —
-// outro tema não precisa nomear as próprias peças internas assim, só precisa exportar um `Shell`
-// que aceite `ThemeShellProps`.
+// Arranjo "bento": Header, SidebarLeft e a coluna Content+Footer viram cartões separados,
+// flutuando com um vão visível entre eles (gap-4 + padding no wrapper) em vez de encostados uns
+// nos outros como no Venore Slime. O vão mostra --app-background por baixo — por isso esse token
+// entra aqui, no wrapper, e não mais dentro de ContentSlot (cópia deste tema: ver
+// ContentSlot.tsx). Cada cartão (Header/SidebarLeft/Content) tem a própria borda/rounded-panel/
+// shadow-float a partir de lg — ajuste feito nas cópias locais desses componentes, não no Shell.
 //
-// Footer mora DENTRO da coluna de conteúdo (abaixo de ContentSlot), não como irmão do `flex`
-// externo (correção desta sessão — paridade com o protótipo venore-docks,
-// platform-frame.tsx:281-297, onde PlatformFooter é filho da mesma coluna que `<main>`, nunca
-// solto na `<div className="grid...">` ao lado da sidebar). Colocar Footer fora da coluna fazia
-// ele esticar de ponta a ponta por baixo da sidebar; com Footer dentro da coluna, o `flex` externo
-// (align-items: stretch, default) estica SidebarLeftSlot pra acompanhar a altura de
-// Content+Footer somados — a sidebar termina exatamente onde o footer termina, nunca por cima ou
-// por baixo dele.
+// Abaixo de lg a SidebarLeft volta a ser off-canvas full-bleed (comportamento herdado do
+// MobileNavDrawer, inalterado) — o gap/padding do wrapper ainda se aplica a Header e à coluna de
+// conteúdo, então o "bento" persiste no mobile, só sem a sidebar como terceiro cartão.
 export function Shell({
   header,
   footer,
@@ -32,11 +25,11 @@ export function Shell({
   breadcrumbsJsonLd,
 }: ThemeShellProps) {
   return (
-    <>
+    <div className="flex min-h-dvh flex-col gap-4 bg-(image:--app-background) p-4">
       <HeaderSlot {...header} />
-      <div className="flex flex-1">
+      <div className="flex flex-1 gap-4">
         <SidebarLeftSlot {...sidebarLeft} />
-        <div className="flex min-w-0 flex-1 flex-col">
+        <div className="flex min-w-0 flex-1 flex-col gap-4">
           <ContentSlot
             sidebarContextualEnabled={sidebarContextualEnabled}
             sidebarContextual={sidebarContextual}
@@ -48,6 +41,6 @@ export function Shell({
           <FooterSlot {...footer} />
         </div>
       </div>
-    </>
+    </div>
   );
 }

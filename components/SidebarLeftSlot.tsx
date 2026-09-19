@@ -62,7 +62,11 @@ export function SidebarLeftSlot({
         // não está na lista de propriedades de ui-motion-emphasis, então px-5→px-3 trocava
         // instantaneamente enquanto a largura do <aside> ainda levava 300ms pra terminar,
         // deslocando o ícone antes do fim da transição). Só `width` anima.
-        "relative flex h-full w-full flex-col px-5 py-6 text-foreground shadow-float lg:w-(--sidebar-width-expanded) lg:shrink-0 lg:border-r lg:shadow-none ui-motion-emphasis",
+        //
+        // Cópia deste tema: Volt trata a sidebar como mais um cartão "bento" flutuante (borda nos
+        // 4 lados + rounded-panel + shadow sempre ligada a partir de lg), não uma coluna
+        // full-bleed com borda só à direita como no Venore Slime.
+        "relative flex h-full w-full flex-col px-5 py-6 text-foreground shadow-float ui-motion-emphasis lg:w-(--sidebar-width-expanded) lg:shrink-0 lg:rounded-panel lg:border",
         isAdmin ? "border-ring bg-(image:--sidebar-bg-admin)" : "border-border bg-(image:--sidebar-bg)",
         collapsed && "lg:w-(--sidebar-width-collapsed)",
       )}

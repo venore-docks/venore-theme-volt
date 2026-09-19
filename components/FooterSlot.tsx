@@ -9,9 +9,12 @@ import { PlatformBrand } from "./PlatformBrand";
 // negócio injetada via prop, não um token semântico shadcn (mesma exceção documentada em
 // build-birthday-pdf-html.ts). Server component puro, sem I/O — quem busca dado (getBrandConfig +
 // getMenuByLocation("sitemap")) é platform/theme-rendering/resolve-theme-slot-props.ts.
+// Cópia deste tema: Volt trata o footer como mais um cartão "bento" (bg-card + borda +
+// rounded-panel + shadow a partir de lg, em vez do border-t full-bleed do Venore Slime) — mesmo
+// tratamento dado a Header/SidebarLeft/Content em Shell.tsx.
 export function FooterSlot({ brand, sitemapItems, creditsEnabled }: FooterSlotProps) {
   return (
-    <footer className="mt-auto grid gap-8 border-t border-border px-4 py-12 text-muted-foreground sm:px-6 lg:grid-cols-[max-content_minmax(0,1fr)] lg:gap-12 lg:px-8">
+    <footer className="mt-auto grid gap-8 border-t border-border bg-card px-4 py-12 text-muted-foreground sm:px-6 lg:grid-cols-[max-content_minmax(0,1fr)] lg:gap-12 lg:rounded-panel lg:border lg:border-border lg:px-8 lg:shadow-float">
       <div className="w-fit max-w-full justify-self-start space-y-5 rounded-panel border border-border bg-accent/14 px-6 py-6">
         <div>
           <div className="max-w-40 origin-left scale-125">
