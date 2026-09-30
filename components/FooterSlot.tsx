@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Sitemap } from "@venore/theme-sdk/ui";
 import type { FooterSlotProps } from "@venore/theme-sdk";
 import { PlatformBrand } from "./PlatformBrand";
@@ -12,7 +13,7 @@ import { PlatformBrand } from "./PlatformBrand";
 // Cópia deste tema: Volt trata o footer como mais um cartão "bento" (bg-card + borda +
 // rounded-panel + shadow a partir de lg, em vez do border-t full-bleed do Venore Slime) — mesmo
 // tratamento dado a Header/SidebarLeft/Content em Shell.tsx.
-export function FooterSlot({ brand, sitemapItems, creditsEnabled }: FooterSlotProps) {
+export function FooterSlot({ brand, sitemapItems, creditsEnabled, loginLinkHref }: FooterSlotProps) {
   return (
     <footer className="mt-auto grid gap-8 border-t border-border bg-card px-4 py-12 text-muted-foreground sm:px-6 lg:grid-cols-[max-content_minmax(0,1fr)] lg:gap-12 lg:rounded-panel lg:border lg:border-border lg:px-8 lg:shadow-float">
       <div className="w-fit max-w-full justify-self-start space-y-5 rounded-panel border border-border bg-accent/14 px-6 py-6">
@@ -36,8 +37,16 @@ export function FooterSlot({ brand, sitemapItems, creditsEnabled }: FooterSlotPr
         )}
       </div>
 
-      <div className="pt-1">
+      <div className="space-y-4 pt-1">
         <Sitemap items={sitemapItems} />
+        {loginLinkHref && (
+          // Deliberado, separado do sitemap: só aparece quando o admin escondeu "Entrar" do
+          // header (nav.hideLoginLink) e pediu explicitamente pra manter um acesso no rodapé
+          // (nav.showLoginInFooter) — resolvido no core (platform/nav-visibility).
+          <Link href={loginLinkHref} className="inline-flex rounded-sm text-xs font-medium uppercase tracking-caps text-muted-foreground/56 outline-none ui-motion-base hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring">
+            Entrar
+          </Link>
+        )}
       </div>
 
       {creditsEnabled ? (

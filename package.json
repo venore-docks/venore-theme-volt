@@ -1,6 +1,6 @@
 {
   "name": "@venore/theme-volt",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Volt — tema do Venore Docks no estilo bento grid / dopamine design: cores saturadas, alto contraste, tipografia com hierarquia exagerada, cantos generosos.",
   "private": true,
   "type": "module",
